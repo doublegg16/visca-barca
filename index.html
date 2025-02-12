@@ -22,6 +22,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative; /* Esto asegura que el botón "No" se mueva dentro del contenedor */
         }
         img {
             width: 200px;
@@ -55,6 +56,7 @@
             background-color: #cccccc;
             color: black;
             position: absolute;
+            transition: all 0.5s ease; /* Esto hace que el movimiento sea más suave */
         }
          footer {
             margin-top: 50px;
@@ -108,8 +110,14 @@
 
         function moveNoButton() {
             let button = document.getElementById("no");
-            let x = Math.random() * (window.innerWidth - 100);
-            let y = Math.random() * (window.innerHeight - 100);
+            let container = document.querySelector('.container');
+            
+            // Calcula un lugar aleatorio dentro del contenedor, considerando su tamaño
+            let containerRect = container.getBoundingClientRect();
+            let x = Math.random() * (containerRect.width - button.offsetWidth);
+            let y = Math.random() * (containerRect.height - button.offsetHeight);
+            
+            // Usamos el "left" y "top" para mover el botón, la transición hará el movimiento suave
             button.style.left = `${x}px`;
             button.style.top = `${y}px`;
         }
