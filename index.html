@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>visca barca</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #ffe6f2;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Evitar que el confeti se corte */
+            height: 100vh; /* Asegurar que el body ocupe toda la ventana */
         }
         .container {
             max-width: 400px;
@@ -70,7 +75,6 @@
         <p>si lees esto me debes otro chillywilly. &copy;Rights Reserved alejojojo.</p>
     </footer>
     
-    
     <script>
         const questions = [
             { text: "lista para responderr??", image: "imagen2.jpg" },
@@ -86,12 +90,14 @@
                 currentQuestion++;
                 updateQuestion();
             } else {
-                // Aquí cambiamos el contenido cuando el usuario dice "Sí"
+                // Cambiar el contenido cuando el usuario dice "Sí"
                 document.querySelector('.container').innerHTML = `
                     <img class="result-imag" src="imagen7.jpg" alt="Imagen de corazón"> <!-- Cambia el nombre de la imagen aquí -->
                     <h2>es un si!! letsgooooo</h2>
                     <img class="result-image" src="imagen4.jpg" alt="Imagen de corazón"> <!-- Cambia el nombre de la imagen aquí -->
                 `;
+                // Iniciar el confeti cuando el usuario hace clic en el último "Sí"
+                startConfetti();
             }
         }
 
@@ -106,6 +112,25 @@
             let y = Math.random() * (window.innerHeight - 100);
             button.style.left = `${x}px`;
             button.style.top = `${y}px`;
+        }
+
+        // Función para generar el confeti en un bucle continuo con menos cantidad
+        function startConfetti() {
+            if (typeof confetti !== 'undefined') {
+                // Crear un loop de confeti con menos partículas
+                setInterval(function() {
+                    confetti({
+                        particleCount: 70, // Reducción del 30% de partículas
+                        spread: 70,
+                        origin: { x: Math.random(), y: 0 },
+                        colors: ['#0000FF', '#00FF00', '#FFD700'], // Colores personalizados
+                        gravity: 1,
+                        drift: Math.random() * 2 - 1, // Desviación lateral aleatoria
+                    });
+                }, 100); // Generar confeti cada 100ms
+            } else {
+                console.error("La librería de confeti no está definida.");
+            }
         }
     </script>
 </body>
